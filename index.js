@@ -1,7 +1,9 @@
 const mysql = require("mysql");
 const consoleTable = require("console.table");
 const inquirer = require("inquirer");
-const { listenerCount } = require("process");
+const add = require("./add");
+const view = require("./view");
+const update = require("./update");
 
 inquirer
   .prompt([
@@ -13,17 +15,17 @@ inquirer
     },
   ])
   .then((answers) => {
-    console.log(answers);
-
     if (answers.add_view_update === "Add") {
       console.log("picked add");
-    }
 
-    if (answers.add_view_update === "View") {
-      console.log("picked add");
-    }
+      add();
+    } else if (answers.add_view_update === "View") {
+      console.log("picked view");
 
-    if (answers.add_view_update === "Update") {
+      view();
+    } else if (answers.add_view_update === "Update") {
       console.log("picked update");
+
+      update();
     }
   });
