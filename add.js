@@ -18,8 +18,30 @@ var add = function () {
           .prompt([
             {
               type: "input",
-              name: "picked_add",
+              name: "picked_add_eeFirstN",
               message: "What is the employee's first name?",
+            },
+            {
+              type: "input",
+              name: "picked_add_eeLastN",
+              message: "What is the employee's last name?",
+            },
+            {
+              type: "list",
+              name: "picked_add_eeRole",
+              message: "What is their role?",
+              choices: ["Intern", "Software Engineer", "Manager", "CEO"],
+            },
+            {
+              type: "list",
+              name: "picked_add_eeDept",
+              message: "What department is the employee in?",
+              choices: [
+                "Recruiting",
+                "Engineering",
+                "Human Resources",
+                "Staff",
+              ],
             },
           ])
           .then((answers) => {
@@ -30,7 +52,7 @@ var add = function () {
           .prompt([
             {
               type: "input",
-              name: "picked_add",
+              name: "picked_add_role",
               message: "What role would you like to add?",
             },
           ])
@@ -42,7 +64,7 @@ var add = function () {
           .prompt([
             {
               type: "input",
-              name: "picked_add",
+              name: "picked_add_dept",
               message: "What department would you like to add?",
             },
           ])
