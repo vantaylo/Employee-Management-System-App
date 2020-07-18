@@ -69,7 +69,7 @@ var add = function () {
               }
             );
 
-            // TODO: connection end function
+            connection.end();
           });
       } else if (answers.picked_add === "Role") {
         inquirer
@@ -106,6 +106,8 @@ var add = function () {
                 if (err) throw err;
               }
             );
+
+            connection.end();
           });
       } else if (answers.picked_add === "Department") {
         inquirer
@@ -128,6 +130,8 @@ var add = function () {
                 if (err) throw err;
               }
             );
+
+            connection.end();
           });
       }
     });

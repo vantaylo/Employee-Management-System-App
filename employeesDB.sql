@@ -26,3 +26,4 @@ CREATE TABLE dept_info (
     PRIMARY KEY (id)
 );
 
+
