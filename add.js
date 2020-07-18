@@ -1,6 +1,18 @@
 const mysql = require("mysql");
-const consoleTable = require("console.table");
 const inquirer = require("inquirer");
+const main = require("./index");
+
+var connection = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "password",
+  database: "employees_DB",
+});
+
+connection.connect(function (err) {
+  if (err) throw err;
+});
 
 var add = function () {
   inquirer
@@ -34,18 +46,30 @@ var add = function () {
             },
             {
               type: "list",
-              name: "picked_add_eeDept",
-              message: "What department is the employee in?",
-              choices: [
-                "Recruiting",
-                "Engineering",
-                "Human Resources",
-                "Staff",
-              ],
+              name: "picked_add_eeManager",
+              message: "Who is the Manager for this employee?",
+              choices: ["Manager A", "Manager B", "Manager C", "Manager D"],
             },
           ])
           .then((answers) => {
             console.log("Adding employee: " + JSON.stringify(answers));
+
+            connection.query(
+              "INSERT INTO employee_info SET ?",
+              [
+                {
+                  employee_first_name: answers.picked_add_eeFirstN,
+                  employee_last_name: answers.picked_add_eeLastN,
+                  employee_role: answers.picked_add_eeRole,
+                  employee_manager: answers.picked_add_eeManager,
+                },
+              ],
+              function (err) {
+                if (err) throw err;
+              }
+            );
+
+            // TODO: connection end function
           });
       } else if (answers.picked_add === "Role") {
         inquirer
@@ -55,9 +79,33 @@ var add = function () {
               name: "picked_add_role",
               message: "What role would you like to add?",
             },
+            {
+              type: "input",
+              name: "picked_add_roleSalary",
+              message: "What is their salary?",
+            },
+            {
+              type: "input",
+              name: "picked_add_roleDepartment",
+              message: "What department is this role in?",
+            },
           ])
           .then((answers) => {
             console.log("Adding role: " + JSON.stringify(answers));
+
+            connection.query(
+              "INSERT INTO role_info SET ?",
+              [
+                {
+                  title: answers.picked_add_role,
+                  salary: answers.picked_add_roleSalary,
+                  department: answers.picked_add_roleDepartment,
+                },
+              ],
+              function (err) {
+                if (err) throw err;
+              }
+            );
           });
       } else if (answers.picked_add === "Department") {
         inquirer
@@ -70,6 +118,16 @@ var add = function () {
           ])
           .then((answers) => {
             console.log("Adding department: " + JSON.stringify(answers));
+
+            connection.query(
+              "INSERT INTO dept_info SET ?",
+              {
+                dept_name: answers.picked_add_dept,
+              },
+              function (err) {
+                if (err) throw err;
+              }
+            );
           });
       }
     });
