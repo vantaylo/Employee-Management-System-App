@@ -1,20 +1,21 @@
 const mysql = require("mysql");
 const consoleTable = require("console.table");
 const inquirer = require("inquirer");
-
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "password",
-  database: "employees_DB",
-});
-
-connection.connect(function (err) {
-  if (err) throw err;
-});
+const main = require("./index");
 
 var update = async function () {
+  var connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "password",
+    database: "employees_DB",
+  });
+
+  connection.connect(function (err) {
+    if (err) throw err;
+  });
+
   var allEmployees;
   var employeeId;
 
@@ -68,6 +69,9 @@ var update = async function () {
                   if (err) throw err;
                 }
               );
+
+              connection.end();
+              main();
             });
         } else if (answers.picked_update_choices === "Employee's Manager") {
           inquirer
@@ -87,6 +91,9 @@ var update = async function () {
                   if (err) throw err;
                 }
               );
+
+              connection.end();
+              main();
             });
         }
       });

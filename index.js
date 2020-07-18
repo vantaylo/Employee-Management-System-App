@@ -1,9 +1,6 @@
 const mysql = require("mysql");
 const consoleTable = require("console.table");
 const inquirer = require("inquirer");
-const add = require("./add");
-const view = require("./view");
-const update = require("./update");
 
 function main() {
   inquirer
@@ -32,5 +29,10 @@ function main() {
     });
 }
 
-main();
 module.exports = main;
+
+const add = require("./add");
+const view = require("./view");
+const update = require("./update");
+
+main();

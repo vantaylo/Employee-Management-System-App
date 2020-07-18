@@ -1,20 +1,21 @@
 const mysql = require("mysql");
 const consoleTable = require("console.table");
 const inquirer = require("inquirer");
-
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "password",
-  database: "employees_DB",
-});
-
-connection.connect(function (err) {
-  if (err) throw err;
-});
+const main = require("./index");
 
 var view = function () {
+  var connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "password",
+    database: "employees_DB",
+  });
+
+  connection.connect(function (err) {
+    if (err) throw err;
+  });
+
   inquirer
     .prompt([
       {
@@ -38,6 +39,7 @@ var view = function () {
           );
 
           connection.end();
+          main();
         });
       } else if (answers.picked_view === "Roles") {
         connection.query("SELECT * FROM employees_db.role_info", function (
@@ -49,6 +51,7 @@ var view = function () {
           console.table(["id", "title", "salary", "department"], res);
 
           connection.end();
+          main();
         });
       } else if (answers.picked_view === "Departments") {
         connection.query("SELECT * FROM employees_db.dept_info", function (
@@ -57,9 +60,10 @@ var view = function () {
         ) {
           if (err) throw err;
 
-          console.table(["id", "dept_name"], res);
+          console.table(["id", "departments"], res);
 
           connection.end();
+          main();
         });
       }
     });

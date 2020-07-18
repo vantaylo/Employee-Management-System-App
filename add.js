@@ -2,19 +2,19 @@ const mysql = require("mysql");
 const inquirer = require("inquirer");
 const main = require("./index");
 
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "password",
-  database: "employees_DB",
-});
-
-connection.connect(function (err) {
-  if (err) throw err;
-});
-
 var add = function () {
+  var connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "password",
+    database: "employees_DB",
+  });
+
+  connection.connect(function (err) {
+    if (err) throw err;
+  });
+
   inquirer
     .prompt([
       {
@@ -70,6 +70,7 @@ var add = function () {
             );
 
             connection.end();
+            main();
           });
       } else if (answers.picked_add === "Role") {
         inquirer
@@ -108,6 +109,7 @@ var add = function () {
             );
 
             connection.end();
+            main();
           });
       } else if (answers.picked_add === "Department") {
         inquirer
@@ -132,6 +134,7 @@ var add = function () {
             );
 
             connection.end();
+            main();
           });
       }
     });
