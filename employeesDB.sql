@@ -7,8 +7,8 @@ CREATE TABLE employee_info (
 	id int NOT NULL AUTO_INCREMENT,
     employee_first_name VARCHAR(30) NOT NULL,
     employee_last_name VARCHAR(30) NOT NULL,
-    employee_role VARCHAR(30) NOT NULL,
-    employee_manager VARCHAR(30) NOT NULL,
+    employee_role INT NOT NULL,
+    employee_manager INT NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -16,7 +16,7 @@ CREATE TABLE role_info (
 	id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30),
     salary DECIMAL(10,2),
-    department VARCHAR(30) NOT NULL,
+    department INT NOT NULL,
     PRIMARY KEY (id)
 );
 

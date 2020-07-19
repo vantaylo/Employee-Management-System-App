@@ -12,92 +12,80 @@ var update = async function () {
     database: "employees_DB",
   });
 
-  connection.connect(function (err) {
+  connection.connect(async function (err) {
     if (err) throw err;
   });
 
   var allEmployees;
   var employeeId;
 
-  await connection.query("SELECT * FROM employees_db.employee_info", function (
-    err,
-    res
-  ) {
-    if (err) throw err;
+  await connection.query(
+    "SELECT * FROM employees_db.employee_info",
+    async function (err, res) {
+      if (err) throw err;
 
-    allEmployees = res.map(function (val, index, _) {
-      return (
-        val.id + " - " + val.employee_first_name + " " + val.employee_last_name
-      );
-    });
+      allEmployees = res.map(function (val, index, _) {
+        return (
+          val.id +
+          " - " +
+          val.employee_first_name +
+          " " +
+          val.employee_last_name
+        );
+      });
 
-    console.log("RES: ", res);
-    console.log("ALL EMPLOYEES: ", allEmployees);
+      var allRoles;
+      var roleId;
 
-    inquirer
-      .prompt([
-        {
-          type: "list",
-          name: "picked_update_employee",
-          message: "Which employee would you like to update?",
-          choices: allEmployees,
-        },
-        {
-          type: "list",
-          name: "picked_update_choices",
-          message: "What would you like to update?",
-          choices: ["Employee's Role", "Employee's Manager"],
-        },
-      ])
-      .then((answers) => {
-        employeeId = answers.picked_update_employee.split(" ")[0];
+      await connection.query(
+        "SELECT * FROM employees_db.role_info",
+        async function (err, res) {
+          if (err) throw err;
 
-        if (answers.picked_update_choices === "Employee's Role") {
-          inquirer
-            .prompt([
-              {
-                type: "input",
-                name: "picked_update_role",
-                message: "What is their new role?",
-              },
-            ])
-            .then((answers) => {
-              connection.query(
-                "UPDATE employee_info SET employee_role = ? WHERE id = ?",
-                [answers.picked_update_role, employeeId],
-                function (err, res) {
-                  if (err) throw err;
-                }
-              );
+          allRoles = res.map(function (val, index, _) {
+            return val.id + " - " + val.title;
+          });
 
-              connection.end();
-              main();
-            });
-        } else if (answers.picked_update_choices === "Employee's Manager") {
           inquirer
             .prompt([
               {
                 type: "list",
-                name: "picked_update_manager",
-                message: "Who is their new manager?",
-                choices: ["Manager A", "Manager B", "Manager C", "Manager D"],
+                name: "picked_update_employee",
+                message: "Which employee would you like to update their role?",
+                choices: allEmployees,
               },
             ])
             .then((answers) => {
-              connection.query(
-                "UPDATE employee_info SET employee_manager = ? WHERE id = ?",
-                [answers.picked_update_manager, employeeId],
-                function (err, res) {
-                  if (err) throw err;
-                }
-              );
+              employeeId = answers.picked_update_employee.split(" ")[0];
 
-              connection.end();
-              main();
+              inquirer
+                .prompt([
+                  {
+                    type: "list",
+                    name: "picked_update_role",
+                    message: "What is their new role?",
+                    choices: allRoles,
+                  },
+                ])
+                .then((answers) => {
+                  roleId = answers.picked_update_role.split(" ")[0];
+
+                  connection.query(
+                    "UPDATE employee_info SET employee_role = ? WHERE id = ?",
+                    [roleId, employeeId],
+                    function (err, res) {
+                      if (err) throw err;
+                    }
+                  );
+
+                  connection.end();
+                  main();
+                });
             });
         }
-      });
-  });
+      );
+    }
+  );
 };
 
 module.exports = update;

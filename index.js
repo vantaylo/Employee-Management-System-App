@@ -12,6 +12,7 @@ function main() {
         choices: ["Add", "View", "Update"],
       },
     ])
+
     .then((answers) => {
       if (answers.add_view_update === "Add") {
         console.log("picked add");
