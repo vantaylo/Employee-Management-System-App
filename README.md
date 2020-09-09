@@ -10,12 +10,12 @@ The command-line application allows users to:
 - View departments, roles, employees
 - Update employee roles
 
-## Built With
+## Technologies
 
-JavaScript
-NodeJS
-MySQL
-InquirerJS
+- JavaScript
+- NodeJS
+- MySQL
+- InquirerJS
 
 ## Installation
 
