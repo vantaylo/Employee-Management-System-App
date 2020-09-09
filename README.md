@@ -19,11 +19,10 @@ InquirerJS
 
 ## Installation
 
-1 - To install all dependencies, in terminal, run $ npm install
-2 - To start application, run $ node index.js
-3 - Run employeesDB.sql in MySQLWorkbench
+- To install all dependencies, in terminal, run $ npm install
+- To start application, run $ node index.js
+- Run employeesDB.sql in MySQLWorkbench
 
-## Preview
 
 ## User Story
 
@@ -38,3 +37,7 @@ SO THAT I can organize and keep track of the company
 As a business owner
 I want to be able to view and manage the ddetails about my company
 So that I can organize and plan my business
+
+## Preview
+
+![](EmployeeMgmtSystemDemo.gif)
