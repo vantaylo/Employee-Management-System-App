@@ -13,9 +13,9 @@ The command-line application allows users to:
 ## Technologies
 
 - JavaScript
-- NodeJS
+- Node.js
 - MySQL
-- InquirerJS
+- Inquirer.js
 
 ## Installation
 
